@@ -25,7 +25,9 @@ impl Beanstalkd {
     pub fn connect(host: &str, port: u16) -> BeanstalkdResult<Beanstalkd> {
         let tcp_stream = try!(TcpStream::connect(&(host, port)));
 
-        Ok(Beanstalkd { stream: BufStream::new(tcp_stream) })
+        Ok(Beanstalkd {
+            stream: BufStream::new(tcp_stream),
+        })
     }
 
     /// Short hand method to connect to `localhost:11300`
@@ -39,18 +41,21 @@ impl Beanstalkd {
     }
 
     /// Inserts a job into the client's currently used tube
-    pub fn put(&mut self,
-               body: &str,
-               priority: u32,
-               delay: u32,
-               ttr: u32)
-               -> BeanstalkdResult<u64> {
-        self.cmd(commands::put(body, priority, delay, ttr)).map(parse::id)
+    pub fn put(
+        &mut self,
+        body: &str,
+        priority: u32,
+        delay: u32,
+        ttr: u32,
+    ) -> BeanstalkdResult<u64> {
+        self.cmd(commands::put(body, priority, delay, ttr))
+            .map(parse::id)
     }
 
     /// Get the next message out of the queue
     pub fn reserve(&mut self) -> BeanstalkdResult<(u64, String)> {
-        self.cmd(commands::reserve()).map(|r| (parse::id(r.clone()), parse::body(r)))
+        self.cmd(commands::reserve())
+            .map(|r| (parse::id(r.clone()), parse::body(r)))
     }
 
     /// Deletes a message out of the queue

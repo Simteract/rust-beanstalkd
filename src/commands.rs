@@ -3,9 +3,11 @@ pub fn tube(tube: &str) -> String {
 }
 
 pub fn put(body: &str, priority: u32, delay: u32, ttr: u32) -> String {
-    build("put",
-          vec![priority.to_string(), delay.to_string(), ttr.to_string()],
-          body)
+    build(
+        "put",
+        vec![priority.to_string(), delay.to_string(), ttr.to_string()],
+        body,
+    )
 }
 
 pub fn reserve() -> String {
@@ -53,8 +55,10 @@ fn tube_test() {
 
 #[test]
 fn put_test() {
-    assert_eq!(put("some message", 0, 2, 10000),
-               "put 0 2 10000 12\r\nsome message\r\n".to_string());
+    assert_eq!(
+        put("some message", 0, 2, 10000),
+        "put 0 2 10000 12\r\nsome message\r\n".to_string()
+    );
 }
 
 #[test]

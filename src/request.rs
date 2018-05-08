@@ -2,7 +2,7 @@ extern crate bufstream;
 
 use std::net::TcpStream;
 use self::bufstream::BufStream;
-use std::io::{Write, BufRead, Read};
+use std::io::{BufRead, Read, Write};
 use std::str::FromStr;
 use std::str::from_utf8;
 

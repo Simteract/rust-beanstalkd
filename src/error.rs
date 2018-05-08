@@ -2,7 +2,10 @@ use std::error::Error;
 use std::fmt::{Display, Formatter};
 
 #[derive(Debug, Clone)]
-pub enum BeanstalkdError { ConnectionError, RequestError }
+pub enum BeanstalkdError {
+    ConnectionError,
+    RequestError,
+}
 
 impl Error for BeanstalkdError {
     fn description(&self) -> &str {
