@@ -5,14 +5,10 @@ use std::net::TcpStream;
 use self::bufstream::BufStream;
 
 use commands;
-use error::{BeanstalkdError, BeanstalkdResult};
+use error::{BeanstalkdResult};
 use parse;
 use request::Request;
 use response::Response;
-
-macro_rules! try {
-    ($e:expr) => (match $e { Ok(e) => e, Err(_) => return Err(BeanstalkdError::ConnectionError) })
-}
 
 pub struct Beanstalkd {
     stream: BufStream<TcpStream>,
@@ -23,7 +19,7 @@ impl Beanstalkd {
     ///
     /// Example: `let mut beanstalkd = Beanstalkd::connect('localhost', 11300).unwrap();`
     pub fn connect(host: &str, port: u16) -> BeanstalkdResult<Beanstalkd> {
-        let tcp_stream = try!(TcpStream::connect(&(host, port)));
+        let tcp_stream = TcpStream::connect(&(host, port))?;
 
         Ok(Beanstalkd {
             stream: BufStream::new(tcp_stream),

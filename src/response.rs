@@ -1,12 +1,12 @@
 #[derive(PartialEq, Debug, Clone)]
 pub enum Status {
-    OK,
-    RESERVED,
-    INSERTED,
-    USING,
-    DELETED,
-    WATCHING,
-    NOT_IGNORED,
+    Ok,
+    Reserved,
+    Inserted,
+    Using,
+    Deleted,
+    Watching,
+    NotIgnored,
 }
 
 #[derive(Clone)]

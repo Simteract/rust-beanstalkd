@@ -1,24 +1,36 @@
-use std::error::Error;
-use std::fmt::{Display, Formatter};
+use std::io;
+use std::num;
+use std::str;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Fail)]
 pub enum BeanstalkdError {
-    ConnectionError,
-    RequestError,
+    #[fail(display = "Unable to establish connection {}", _0)]
+    Io(#[cause] io::Error),
+    #[fail(display = "Expected data was missing")]
+    MissingData,
+    #[fail(display = "The server responded with an unxpected status")]
+    InvalidStatus,
+    #[fail(display = "Input was invalid UTF-8: {}", _0)]
+    Utf8Error(str::Utf8Error),
+    #[fail(display = "Input was not a valid integer: {}", _0)]
+    ParseIntError(num::ParseIntError),
 }
 
-impl Error for BeanstalkdError {
-    fn description(&self) -> &str {
-        match *self {
-            BeanstalkdError::ConnectionError => "Connection error occurred",
-            BeanstalkdError::RequestError => "Request error occurred",
-        }
+impl From<io::Error> for BeanstalkdError {
+    fn from(error: io::Error) -> Self {
+        BeanstalkdError::Io(error)
     }
 }
 
-impl Display for BeanstalkdError {
-    fn fmt(&self, formatter: &mut Formatter) -> ::std::fmt::Result {
-        self.description().fmt(formatter)
+impl From<num::ParseIntError> for BeanstalkdError {
+    fn from(error: num::ParseIntError) -> Self {
+        BeanstalkdError::ParseIntError(error)
+    }
+}
+
+impl From<str::Utf8Error> for BeanstalkdError {
+    fn from(error: str::Utf8Error) -> Self {
+        BeanstalkdError::Utf8Error(error)
     }
 }
 

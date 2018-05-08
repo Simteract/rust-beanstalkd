@@ -9,9 +9,6 @@ description = "Easy-to-use beanstalkd client for Rust (IronMQ compatible)"
 keywords = ["beanstalkd", "queue", "worker", "ironmq"]
 readme = "README.md"
 
-[lib]
-name = "beanstalkd"
-path = "src/lib.rs"
-
 [dependencies]
 bufstream = "*"
+failure = "*"
