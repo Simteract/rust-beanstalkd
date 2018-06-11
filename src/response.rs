@@ -2,6 +2,7 @@
 pub enum Status {
     Ok,
     Reserved,
+    Released,
     Inserted,
     Using,
     Deleted,

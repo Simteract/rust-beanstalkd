@@ -29,6 +29,7 @@ impl<'a> Request<'a> {
         let status = match *status_str {
             "OK" => Status::Ok,
             "RESERVED" => Status::Reserved,
+            "RELEASED" => Status::Released,
             "INSERTED" => Status::Inserted,
             "USING" => Status::Using,
             "DELETED" => Status::Deleted,

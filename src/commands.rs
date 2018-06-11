@@ -14,6 +14,10 @@ pub fn reserve() -> String {
     build("reserve", vec![], "")
 }
 
+pub fn release(id: u64, priority: u32, delay: u32) -> String {
+    build("release", vec![id.to_string(), priority.to_string(), delay.to_string()], "")
+}
+
 pub fn delete(id: u64) -> String {
     build("delete", vec![id.to_string()], "")
 }

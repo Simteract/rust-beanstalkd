@@ -38,7 +38,7 @@ pub fn count(response: Response) -> Option<u64> {
 #[test]
 fn id_test() {
     let response = Response {
-        status: ::response::Status::INSERTED,
+        status: ::response::Status::Inserted,
         data: "INSERTED 3\r\n".to_string(),
     };
     assert_eq!(id(response), 3);
@@ -47,7 +47,7 @@ fn id_test() {
 #[test]
 fn body_test() {
     let response = Response {
-        status: ::response::Status::RESERVED,
+        status: ::response::Status::Reserved,
         data: "RESERVED 3 4\r\ntest\r\nbody\r\n".to_string(),
     };
     assert_eq!(body(response), "test\r\nbody".to_string());
@@ -56,7 +56,7 @@ fn body_test() {
 #[test]
 fn hashmap_test() {
     let response = Response {
-        status: ::response::Status::INSERTED,
+        status: ::response::Status::Inserted,
         data: "OK 15\r\n---\r\na: b\r\nc: d\r\n".to_string(),
     };
     let mut expected_hashmap = HashMap::new();
@@ -68,13 +68,13 @@ fn hashmap_test() {
 #[test]
 fn count_test() {
     let response_ok = Response {
-        status: ::response::Status::WATCHING,
+        status: ::response::Status::Watching,
         data: "WATCHING 2\r\n".to_string(),
     };
     assert_eq!(count(response_ok), Some(2));
 
     let response_fail = Response {
-        status: ::response::Status::NOT_IGNORED,
+        status: ::response::Status::NotIgnored,
         data: "NOT_IGNORED\r\n".to_string(),
     };
     assert_eq!(count(response_fail), None);

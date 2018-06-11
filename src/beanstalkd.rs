@@ -54,6 +54,10 @@ impl Beanstalkd {
             .map(|r| (parse::id(r.clone()), parse::body(r)))
     }
 
+    pub fn release(&mut self, id: u64, priority: u32, delay: u32) -> BeanstalkdResult<()> {
+        self.cmd(commands::release(id, priority, delay)).map(|_| ())
+    }
+
     /// Deletes a message out of the queue
     pub fn delete(&mut self, id: u64) -> BeanstalkdResult<()> {
         self.cmd(commands::delete(id)).map(|_| ())
